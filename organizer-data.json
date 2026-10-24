@@ -1,0 +1,445 @@
+{
+  "tasks": [
+    {
+      "id": "vp84yfd",
+      "date": "2026-10-26",
+      "done": false,
+      "title": "Toastmasters",
+      "details": "",
+      "tags": [
+        "friends"
+      ],
+      "time": "19:45",
+      "remind": 10
+    },
+    {
+      "id": "puzq8v5",
+      "date": "2026-10-22",
+      "done": false,
+      "created": "2026-10-19",
+      "goal": "codi2uh",
+      "prio": 2,
+      "title": "Meeting",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "brefu3r",
+      "date": "2026-10-27",
+      "done": false,
+      "created": "2026-10-19",
+      "goal": "codi2uh",
+      "prio": 2,
+      "title": "Reach out on test plans and naming g convention",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null,
+      "est": 0,
+      "due": ""
+    },
+    {
+      "id": "mnybuh8",
+      "date": "2026-10-19",
+      "done": true,
+      "created": "2026-10-19",
+      "goal": "m9n3dfa",
+      "prio": 2,
+      "title": "Q1 and 2",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "lc50653",
+      "date": "2026-10-20",
+      "done": true,
+      "created": "2026-10-19",
+      "goal": "m9n3dfa",
+      "prio": 2,
+      "title": "Q3 and 4",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "6m324ra",
+      "date": "",
+      "done": true,
+      "created": "2026-10-19",
+      "goal": "m9n3dfa",
+      "prio": 2,
+      "title": "Review and submi. Estimate interview q",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "tfmj67b",
+      "date": "2026-10-22",
+      "done": false,
+      "created": "2026-10-19",
+      "goal": "m9n3dfa",
+      "prio": 2,
+      "title": "Practice tests",
+      "details": "",
+      "tags": [],
+      "time": "14:00",
+      "remind": 0,
+      "est": 30,
+      "due": "2026-10-28"
+    },
+    {
+      "id": "dkf7xpr",
+      "date": "2026-10-23",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 15,
+      "due": "",
+      "title": "Aoife about asset list. Organize a chat with her",
+      "details": "",
+      "tags": [
+        "career"
+      ],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "6hqfrl2",
+      "date": "",
+      "done": true,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 0,
+      "due": "",
+      "title": "Ff",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "8iqjsr5",
+      "date": "",
+      "done": true,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 0,
+      "due": "",
+      "title": "Gg",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "thbfs69",
+      "date": "",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 15,
+      "due": "",
+      "title": "Aoife asset list",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "2mskxft",
+      "date": "",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 15,
+      "due": "",
+      "title": "Kidney svuh",
+      "details": "",
+      "tags": [],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "v0ptsdg",
+      "date": "2026-10-23",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 30,
+      "due": "",
+      "title": "Log bkup meetings for iso and self. Restart progress report",
+      "details": "",
+      "tags": [],
+      "time": "02:10",
+      "remind": null
+    },
+    {
+      "id": "3hs829f",
+      "date": "",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 0,
+      "due": "",
+      "title": "Sell and move and invest CH Funds",
+      "details": "",
+      "tags": [
+        "family"
+      ],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "9hzzuzt",
+      "date": "",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 0,
+      "due": "",
+      "title": "Invest UK cash",
+      "details": "",
+      "tags": [
+        "family"
+      ],
+      "time": "",
+      "remind": null
+    },
+    {
+      "id": "653qdzx",
+      "date": "",
+      "done": false,
+      "created": "2026-10-22",
+      "goal": "",
+      "prio": 2,
+      "est": 0,
+      "due": "",
+      "title": "Car & update financial planning",
+      "details": "",
+      "tags": [
+        "family"
+      ],
+      "time": "",
+      "remind": null
+    }
+  ],
+  "routines": [
+    {
+      "id": "rgb48x8",
+      "title": "Morning walk",
+      "details": "30 minutes, no phone, articulation practice",
+      "freq": "daily",
+      "time": "06:30",
+      "remind": 10,
+      "start": "2026-10-19",
+      "tags": [
+        "health"
+      ]
+    },
+    {
+      "id": "d28vpci",
+      "title": "Plan the day",
+      "details": "Top 3 priorities\n1. Check testing status. Ensure it's started.\nCreate evidence doc and scope doc\nFeedback from bb\nSend to jd\nGet s3 versioned bucket list \nFind out if they are started and do I need to contact others\n",
+      "freq": "workday",
+      "time": "08:00",
+      "remind": 0,
+      "start": "2026-10-19",
+      "tags": [
+        "career"
+      ]
+    },
+    {
+      "id": "nefi2yg",
+      "title": "Weekly review",
+      "details": "What worked, what next week?",
+      "freq": "weekly",
+      "dow": 0,
+      "time": "17:00",
+      "remind": null,
+      "start": "2026-10-19",
+      "tags": [
+        "friends"
+      ]
+    },
+    {
+      "id": "f24axqu",
+      "freq": "workday",
+      "dow": 4,
+      "dom": 22,
+      "start": "2026-10-22",
+      "title": "Practice tests",
+      "details": "",
+      "tags": [],
+      "time": "14:00",
+      "remind": 0
+    },
+    {
+      "id": "yav8nyx",
+      "freq": "daily",
+      "dow": 4,
+      "dom": 22,
+      "start": "2026-10-22",
+      "title": "Speaking course",
+      "details": "",
+      "tags": [
+        "career",
+        "friends"
+      ],
+      "time": "",
+      "remind": null
+    }
+  ],
+  "rdone": {},
+  "log": [
+    {
+      "id": "7lv9893",
+      "key": "rgb48x8|2026-10-22",
+      "ts": 1792704504384,
+      "text": "Morning walk: 10k",
+      "tags": [
+        "health"
+      ],
+      "type": "note"
+    },
+    {
+      "id": "73cdfyi",
+      "key": "8iqjsr5|",
+      "ts": 1792703230540,
+      "text": "Completed: Gg",
+      "tags": [],
+      "type": "done"
+    },
+    {
+      "id": "uczs0cc",
+      "key": "6hqfrl2|",
+      "ts": 1792703130334,
+      "text": "Completed: Ff",
+      "tags": [],
+      "type": "done"
+    },
+    {
+      "id": "lpyw0r9",
+      "key": "6m324ra|",
+      "ts": 1792701872849,
+      "text": "Completed: Review and submi. Estimate interview q",
+      "tags": [],
+      "type": "done"
+    },
+    {
+      "id": "2wr905q",
+      "key": "lc50653|2026-10-20",
+      "ts": 1792701869504,
+      "text": "Completed: Q3 and 4",
+      "tags": [],
+      "type": "done"
+    },
+    {
+      "id": "ludy9e5",
+      "key": "mnybuh8|2026-10-19",
+      "ts": 1792701854239,
+      "text": "Completed: Q1 and 2",
+      "tags": [],
+      "type": "done"
+    }
+  ],
+  "fired": {
+    "rgb48x8|2026-10-23": 1
+  },
+  "snz": {
+    "rgb48x8|2026-10-19": 1792389095414
+  },
+  "rev": {
+    "2026-10-22": {
+      "ov": 3,
+      "note": "",
+      "B": {
+        "r": 1,
+        "n": ""
+      },
+      "A": {
+        "r": 2,
+        "n": ""
+      },
+      "L": {
+        "r": 4,
+        "n": ""
+      },
+      "E": {
+        "r": 2,
+        "n": ""
+      },
+      "R": {
+        "r": 2,
+        "n": ""
+      },
+      "T": {
+        "r": 2,
+        "n": ""
+      }
+    }
+  },
+  "ctags": [],
+  "goals": [
+    {
+      "id": "znl77b9",
+      "period": "2026-Q4",
+      "title": "Backup & DR expert",
+      "level": "quarter",
+      "prio": 1,
+      "details": "",
+      "done": false
+    },
+    {
+      "id": "m9n3dfa",
+      "period": "2026-10-19",
+      "title": "AP application submitted and prep",
+      "level": "week",
+      "prio": 2,
+      "details": "",
+      "done": false
+    },
+    {
+      "id": "codi2uh",
+      "period": "2026-10-19",
+      "title": "Backup test status logged",
+      "level": "week",
+      "prio": 2,
+      "details": "",
+      "done": false,
+      "parent": "znl77b9"
+    },
+    {
+      "id": "62hg8hb",
+      "period": "2026-10",
+      "title": "Toastmasters 2nd and 4th Monday - speach",
+      "level": "month",
+      "prio": 2,
+      "details": "",
+      "done": false
+    },
+    {
+      "id": "5mz1zw4",
+      "period": "2026-Q4",
+      "title": "Kayaking  lead x1 every 2 month. Paddle x2 per month",
+      "level": "quarter",
+      "prio": 2,
+      "details": "",
+      "done": false
+    }
+  ]
+}
