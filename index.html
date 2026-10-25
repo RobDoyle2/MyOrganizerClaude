@@ -65,6 +65,7 @@ nav button{text-align:center;line-height:1.15}
 body[data-v=dash]{--bg:#e9eef5}body[data-v=plan]{--bg:#e7f2ec}body[data-v=rout]{--bg:#f0ecf8}body[data-v=goals]{--bg:#fbf0e3}body[data-v=rev]{--bg:#e5f1f4}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) body[data-v=dash]{--bg:#121820}:root:not([data-theme="light"]) body[data-v=plan]{--bg:#0f1c18}:root:not([data-theme="light"]) body[data-v=rout]{--bg:#181427}:root:not([data-theme="light"]) body[data-v=goals]{--bg:#201810}:root:not([data-theme="light"]) body[data-v=rev]{--bg:#0e1b20}}
 :root[data-theme="dark"] body[data-v=dash]{--bg:#121820}:root[data-theme="dark"] body[data-v=plan]{--bg:#0f1c18}:root[data-theme="dark"] body[data-v=rout]{--bg:#181427}:root[data-theme="dark"] body[data-v=goals]{--bg:#201810}:root[data-theme="dark"] body[data-v=rev]{--bg:#0e1b20}
+.it.cont{border-style:dashed;border-left-style:solid;padding:5px 10px}.it.cont,.hr .it.cont,.hr.wk .it.cont{background:color-mix(in srgb,var(--c) 14%,var(--card))}a.lk{color:var(--acc);text-decoration:underline;word-break:break-all}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style></head><body>
 <header><div><h1>My Organizer</h1><p id="sub"></p></div><span><button class="ib" data-act="data" aria-label="Data and backup">💾</button><button class="ib" id="bell" data-act="bell" aria-label="Enable notifications">🔔</button></span></header>
@@ -113,10 +114,17 @@ const gbar=g=>{const p=gprog(g);return `<div class='cb' style='--c:${tags(g).len
 const fmtEst=m=>m<60?m+' min':(m/60)+'h';
 const ageT=t=>{if(t.done)return 0;const s=t.created||t.date;return s?Math.round((pd(T())-pd(s))/864e5):0};
 const tI=t=>({k:'t',id:t.id,key:t.id+'|'+t.date,...t});
-function meta(it){const g=it.goal&&goalOf(it.goal),a=it.k==='t'?ageT(it):0,sd=view==='plan'?it.date!==sel:view!=='dash';return[it.time,tags(it).map(x=>esc(TG(x)[0])).join(' + '),it.remind!=null&&it.time?'⏰':'',it.k==='t'&&sd?(it.date?fmtD(it.date):'No date'):'',it.k==='t'&&it.est?fmtEst(it.est):'',it.k==='t'&&it.due&&!it.done?(it.due<T()?'⚠ overdue, due ':'Due ')+fmtD(it.due):'',it.prio===1?'High priority':it.prio===3?'Low priority':'',g?'🎯 '+esc(g.title):'',a>=14?'⚠ open '+Math.floor(a/7)+' weeks':'',it.pp&&it.pp.length?'postponed '+it.pp.length+'x':''].filter(Boolean)}
+const endT=(t,e)=>{const m=+t.slice(0,2)*60+ +t.slice(3,5)+e;return pad(Math.floor(m/60)%24)+':'+pad(m%60)};
+const cov=(i,h)=>i.k==='t'&&i.est&&i.time&&+i.time.slice(0,2)<h&&h*60<+i.time.slice(0,2)*60+ +i.time.slice(3,5)+i.est;
+const cchip=(it,ds)=>`<div class='it cont ${it.done?'dn':''}' style='--c:${col(it)}'><div class='tx' data-act='ed' ${A(it,ds)}><small>↳ ${esc(it.title)}, until ${endT(it.time,it.est)}</small></div></div>`;
+const URLS=t=>((t||'').match(/https?:\/\/[^\s<>"']+/gi)||[]).map(u=>u.replace(/[.,;:!?)\]]+$/,''));
+const alink=u=>` <a class='lk' href='${esc(u)}' target='_blank' rel='noopener noreferrer'>🔗 ${esc(u.replace(/^https?:\/\//,'').slice(0,34))}</a>`;
+const dsum=t=>esc((t||'').replace(/https?:\/\/[^\s<>"']+/gi,' ').replace(/\s+/g,' ').trim().slice(0,60))+URLS(t).slice(0,2).map(alink).join('');
+const lkList=t=>{const L=URLS(t);return L.length?`<small style='display:block;margin:-4px 0 8px'>${L.map(alink).join('<br>')}</small>`:''};
+function meta(it){const g=it.goal&&goalOf(it.goal),a=it.k==='t'?ageT(it):0,sd=view==='plan'?it.date!==sel:view!=='dash';return[it.time&&it.k==='t'&&it.est?it.time+' to '+endT(it.time,it.est):it.time,tags(it).map(x=>esc(TG(x)[0])).join(' + '),it.remind!=null&&it.time?'⏰':'',it.k==='t'&&sd?(it.date?fmtD(it.date):'No date'):'',it.k==='t'&&it.est?fmtEst(it.est):'',it.k==='t'&&it.due&&!it.done?(it.due<T()?'⚠ overdue, due ':'Due ')+fmtD(it.due):'',it.prio===1?'High priority':it.prio===3?'Low priority':'',g?'🎯 '+esc(g.title):'',a>=14?'⚠ open '+Math.floor(a/7)+' weeks':'',it.pp&&it.pp.length?'postponed '+it.pp.length+'x':''].filter(Boolean)}
 function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),3800)}
 function gfields(r,o){const cur=r?r.goal:(o.goal||''),ord={week:0,month:1,quarter:2},gs=[...S.goals].sort((a,b)=>ord[a.level]-ord[b.level]||b.period.localeCompare(a.period)).filter(g=>!g.done||g.id===cur);
-return `<div class='row'><label>Priority<select id='f-prio'>${[1,2,3].map(n=>`<option value='${n}' ${(r?r.prio||2:2)===n?'selected':''}>${PN[n]}</option>`).join('')}</select></label><label>Linked goal<select id='f-goal'><option value=''>None</option>${gs.map(g=>`<option value='${g.id}' ${g.id===cur?'selected':''}>${LV[g.level]}: ${esc(g.title)}</option>`).join('')}</select></label></div><div class='row'><label>Estimate<select id='f-est'>${[...new Set([0,15,30,45,60,90,120,180,240,480,r&&r.est||0])].sort((a,b)=>a-b).map(m=>`<option value='${m}' ${(r&&r.est||0)===m?'selected':''}>${m?fmtEst(m):'No estimate'}</option>`).join('')}</select></label><label>Due by<input type='date' id='f-due' value='${r&&r.due||''}'></label></div>`}
+return `<div class='row'><label>Priority<select id='f-prio'>${[1,2,3].map(n=>`<option value='${n}' ${(r?r.prio||2:2)===n?'selected':''}>${PN[n]}</option>`).join('')}</select></label><label>Linked goal<select id='f-goal'><option value=''>None</option>${gs.map(g=>`<option value='${g.id}' ${g.id===cur?'selected':''}>${LV[g.level]}: ${esc(g.title)}</option>`).join('')}</select></label></div><div class='row'><label>Estimate (duration)<select id='f-est'>${[...new Set([0,15,30,45,60,90,120,180,240,480,r&&r.est||0])].sort((a,b)=>a-b).map(m=>`<option value='${m}' ${(r&&r.est||0)===m?'selected':''}>${m?fmtEst(m):'No estimate'}</option>`).join('')}</select></label><label>Due by<input type='date' id='f-due' value='${r&&r.due||''}'></label></div>`}
 const ppBlock=t=>`<h3>Postponing</h3>${(t.pp||[]).map(p=>`<div class='lg'><span>⏭️</span><div>${p.from?fmtD(p.from):'No date'} to ${fmtD(p.to)}${p.why?'<br><small>'+esc(p.why)+'</small>':''}</div></div>`).join('')}${t.done?'':`<button class='btn ghost' data-act='pp' data-id='${t.id}'>Postpone to a later date</button>`}`;
 function openPp(id){const t=S.tasks.find(x=>x.id===id);if(!t)return;const d=new Date();d.setDate(d.getDate()+1);ed={pp:id};$('#md').innerHTML=`<div class='sh'><div class='hd'><h2>Postpone task</h2><button class='ib' data-act='close' aria-label='Close'>✕</button></div><b>${esc(t.title)}</b><br><small>${t.date?'Now on '+fmtD(t.date):'Not scheduled yet'}</small><label>New date<input type='date' id='p-date' value='${ymd(d)}'></label><label>Reason<textarea id='p-why' placeholder='Why is it being postponed?'></textarea></label><button class='btn' data-act='pps' data-id='${id}'>Postpone</button></div>`;$('#md').hidden=false}
 function openGoal(id,par,l0){const g=id?goalOf(id):null,pg=par?goalOf(par):(g&&g.parent?goalOf(g.parent):null),td=T();ed={goal:id||'',par:par||'',gtags:g?tags(g).slice():(pg?tags(pg).slice():[])};
@@ -145,15 +153,15 @@ S.log=S.log.filter(l=>!(l.key===key&&l.type==='done'));
 if(dn)S.log.unshift({id:uid(),key,ts:Date.now(),text:'Completed: '+it.title,tags:tags(it),type:'done'});
 persist();render();if(k==='t'&&dn&&it.goal){const g=goalOf(it.goal);if(g){const p=gprog(g);toast('🎯 '+LV[g.level]+' goal “'+g.title+'”: '+p.p+'% ('+p.d+'/'+p.t+' tasks)'+(p.p===100?' 🎉':''))}}}
 
-function chip(it,ds){return `<div class="it ${it.done?'dn':''} ${it.k==='t'&&ageT(it)>=14?'old':''}" style="--c:${col(it)}"><button class="ck" data-act="tg" ${A(it,ds)} aria-label="Mark complete">${it.done?'✓':''}</button><div class="tx" data-act="ed" ${A(it,ds)}><b>${it.k==='r'?'🔁 ':''}${esc(it.title)}</b><small>${meta(it).join(', ')}</small>${it.details?`<small>${esc(it.details.slice(0,70))}</small>`:''}</div>${it.k==='t'&&!it.done?`<button class='ib pp' data-act='pp' ${A(it,ds)} aria-label='Postpone task'>⏭️</button>`:''}</div>`}
+function chip(it,ds){return `<div class="it ${it.done?'dn':''} ${it.k==='t'&&ageT(it)>=14?'old':''}" style="--c:${col(it)}"><button class="ck" data-act="tg" ${A(it,ds)} aria-label="Mark complete">${it.done?'✓':''}</button><div class="tx" data-act="ed" ${A(it,ds)}><b>${it.k==='r'?'🔁 ':''}${esc(it.title)}</b><small>${meta(it).join(', ')}</small>${it.details?`<small>${dsum(it.details)}</small>`:''}</div>${it.k==='t'&&!it.done?`<button class='ib pp' data-act='pp' ${A(it,ds)} aria-label='Postpone task'>⏭️</button>`:''}</div>`}
 
 function vPlan(){const d=pd(sel),mon=new Date(d);mon.setDate(d.getDate()-((d.getDay()+6)%7));const td=T(),nh=new Date().getHours();
 let w='';for(let i=0;i<7;i++){const x=new Date(mon);x.setDate(mon.getDate()+i);const s=ymd(x),st=stat(s);
 w+=`<button class="dy ${s===sel?'on':''} ${s===td?'td':''}" data-act="sel" data-d="${s}"><small>${DS[x.getDay()]}</small><b>${x.getDate()}</b><i>${st.t?st.d+'/'+st.t:'-'}</i></button>`}
 const its=items(sel),wd=d.getDay()>0&&d.getDay()<6,all=its.filter(i=>!i.time);let lo=5,hi=22;
-its.forEach(i=>{if(i.time){const h=+i.time.slice(0,2);lo=Math.min(lo,h);hi=Math.max(hi,h)}});
+its.forEach(i=>{if(i.time){const h=+i.time.slice(0,2);lo=Math.min(lo,h);hi=Math.max(hi,h);if(i.k==='t'&&i.est)hi=Math.max(hi,Math.min(23,Math.ceil((h*60+ +i.time.slice(3,5)+i.est)/60)-1))}});
 let rows='';for(let h=lo;h<=hi;h++){const c=its.filter(i=>i.time&&+i.time.slice(0,2)===h);
-rows+=`<div class="hr ${wd&&h>=8&&h<17?'wk':''} ${sel===td&&h===nh?'now':''}"><div class="hl">${pad(h)}:00</div><div>${c.map(i=>chip(i,sel)).join('')}</div><button class="ad" data-act="add" data-h="${h}" aria-label="Add at ${pad(h)}:00">+</button></div>`}
+rows+=`<div class="hr ${wd&&h>=8&&h<17?'wk':''} ${sel===td&&h===nh?'now':''}"><div class="hl">${pad(h)}:00</div><div>${c.map(i=>chip(i,sel)).join('')}${its.filter(i=>cov(i,h)).map(i=>cchip(i,sel)).join('')}</div><button class="ad" data-act="add" data-h="${h}" aria-label="Add at ${pad(h)}:00">+</button></div>`}
 return `<div class="dh"><button class="ib" data-act="wk" data-n="-7" aria-label="Previous week">‹</button><h2>${DN[d.getDay()]} ${d.getDate()} ${d.toLocaleDateString(undefined,{month:'short'})}</h2><button class="ib" data-act="wk" data-n="7" aria-label="Next week">›</button></div>
 <div class="wk7">${w}</div>${wkgoal()}<div class="dh"><span class="tag">${wd?'Work day 08:00 to 17:00':'Rest day'}</span>${sel!==td?'<button class="tag" data-act="today">Back to today</button>':''}</div>
 ${overdue()}${all.length?`<h3>Any time</h3>${all.map(i=>chip(i,sel)).join('')}`:''}<h3>Hour by hour</h3><div class="hrs">${rows}</div>${backlog()}`}
@@ -208,7 +216,7 @@ $('#md').innerHTML=`<div class="sh"><div class="hd"><h2>${r?'Edit':'New'} ${o.k=
 <div class="row">${isT?`<label>Date (empty = task list)<input type="date" id="f-date" value="${r&&o.k==='t'?r.date||'':ds}"></label>`:''}<label>Time<input type="time" id="f-time" value="${tm}"></label>
 ${isT&&r?'':`<label>Repeat<select id="f-rep">${[['once','Just once'],['daily','Every day'],['workday','Work days, Mon to Fri'],['weekly','Weekly'],['monthly','Monthly (same date)']].filter(x=>!(r&&x[0]==='once')).map(([v,n])=>`<option value="${v}" ${v===rep?'selected':''}>${n}</option>`).join('')}</select></label>`}
 <label>Reminder<select id="f-rem">${RM.map(([v,n])=>`<option value="${v}" ${(r&&r.remind===v)||(!r&&v===''&&!o.rep)||(!r&&o.rep&&v===0)?'selected':''}>${n}</option>`).join('')}</select></label></div>
-${isT?gfields(r,o):''}<label>Details<textarea id="f-det" placeholder="Notes, links, steps">${esc(r?r.details:'')}</textarea></label>
+${isT?gfields(r,o):''}<label>Details<textarea id="f-det" placeholder="Notes, links (https://...), steps">${esc(r?r.details:'')}</textarea></label><div id="lks">${lkList(r?r.details:'')}</div>
 ${r?`<h3>Progress log</h3><div id="nl"></div><div class="row" style="grid-template-columns:1fr auto;gap:6px"><input id="f-note" placeholder="Add a progress note"><button class="btn" style="width:auto;margin:4px 0 8px" data-act="note">Add</button></div>`:''}
 ${r&&o.k==='t'?ppBlock(r):''}<button class="btn" data-act="sv">Save</button>${r?'<button class="btn ghost danger" data-act="del">Delete</button>':''}</div>`;
 $('#md').hidden=false;delArm=false;if(r)notes();else setTimeout(()=>$('#f-title').focus(),50)}
@@ -231,7 +239,7 @@ if(sn){if(Date.now()>=sn){delete S.snz[it.key];persist();popup(it,ds)}return}
 if(it.remind==null||S.fired[it.key])return;
 if(n>=t-it.remind*60000&&n-t<45*60000){S.fired[it.key]=1;persist();popup(it,ds)}})}
 
-document.addEventListener('click',e=>{if(e.target.id==='md'){closeEd();return}
+document.addEventListener('click',e=>{if(e.target.closest('a.lk'))return;if(e.target.id==='md'){closeEd();return}
 try{AC=AC||new(window.AudioContext||window.webkitAudioContext)()}catch(x){}
 const b=e.target.closest('[data-act]');if(!b)return;const D=b.dataset;
 switch(D.act){
@@ -284,7 +292,7 @@ case'pdis':b.closest('.pop').remove();break;
 case'bell':try{Notification.requestPermission().then(p=>{b.textContent=p==='granted'?'🔔':'🔕';beep()})}catch(x){beep()}break}});
 try{if(Notification.permission==='granted')$('#bell').textContent='🔔'}catch(e){}
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='f-tag'){e.preventDefault();addTag()}});
-document.addEventListener('input',e=>{const pk=e.target.dataset&&e.target.dataset.pk;if(pk){prv()[pk]=e.target.value;persist();return}const k=e.target.dataset&&e.target.dataset.rk;if(!k)return;const R=rev(rd);if(k==='note')R.note=e.target.value;else R[k].n=e.target.value;persist()});
+document.addEventListener('input',e=>{if(e.target.id==='f-det'&&$('#lks'))$('#lks').innerHTML=lkList(e.target.value);const pk=e.target.dataset&&e.target.dataset.pk;if(pk){prv()[pk]=e.target.value;persist();return}const k=e.target.dataset&&e.target.dataset.rk;if(!k)return;const R=rev(rd);if(k==='note')R.note=e.target.value;else R[k].n=e.target.value;persist()});
 async function wr(){try{const w=await FH.createWritable();await w.write(JSON.stringify(S,null,2));await w.close()}catch(e){FH=null;toast('File link lost. Link it again in Data and backup.')}}
 function exp(){const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='organizer-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 async function linkFile(){try{FH=await showSaveFilePicker({suggestedName:'organizer-data.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});const t=await(await FH.getFile()).text();if(t.trim()){S=fix(JSON.parse(t));persist();render()}else await wr();openData();toast('Linked to '+FH.name)}catch(e){if(e.name!=='AbortError')toast('Could not link the file')}}
