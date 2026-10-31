@@ -66,12 +66,16 @@ body[data-v=dash]{--bg:#e9eef5}body[data-v=plan]{--bg:#e7f2ec}body[data-v=rout]{
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) body[data-v=dash]{--bg:#121820}:root:not([data-theme="light"]) body[data-v=plan]{--bg:#0f1c18}:root:not([data-theme="light"]) body[data-v=rout]{--bg:#181427}:root:not([data-theme="light"]) body[data-v=goals]{--bg:#201810}:root:not([data-theme="light"]) body[data-v=rev]{--bg:#0e1b20}}
 :root[data-theme="dark"] body[data-v=dash]{--bg:#121820}:root[data-theme="dark"] body[data-v=plan]{--bg:#0f1c18}:root[data-theme="dark"] body[data-v=rout]{--bg:#181427}:root[data-theme="dark"] body[data-v=goals]{--bg:#201810}:root[data-theme="dark"] body[data-v=rev]{--bg:#0e1b20}
 .it.cont{border-style:dashed;border-left-style:solid;padding:5px 10px}.it.cont,.hr .it.cont,.hr.wk .it.cont{background:color-mix(in srgb,var(--c) 14%,var(--card))}a.lk{color:var(--acc);text-decoration:underline;word-break:break-all}
+body[data-v=ideas]{--bg:#fbf5dc;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2072%27%3E%3Cg%20fill%3D%27%23f2c94c%27%20fill-opacity%3D%27.16%27%20stroke%3D%27%23d9a227%27%20stroke-opacity%3D%27.38%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M32%208a19%2019%200%200%200-10.5%2034.8c2.2%201.6%203.4%203.8%203.4%206.4v1.8h14.2v-1.8c0-2.6%201.2-4.8%203.4-6.4A19%2019%200%200%200%2032%208z%27%2F%3E%3Cpath%20d%3D%27M25%2056h14M27.5%2062h9%27%20fill%3D%27none%27%2F%3E%3Cpath%20d%3D%27M32%201v3M10%209l2.2%202.2M54%209l-2.2%202.2M3%2028h3M58%2028h3%27%20fill%3D%27none%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-repeat:no-repeat;background-position:center 55%;background-size:min(78vw,340px);background-attachment:fixed}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) body[data-v=ideas]{--bg:#1c190e}}
+:root[data-theme="dark"] body[data-v=ideas]{--bg:#1c190e}
+.idea-box{background:color-mix(in srgb,var(--card) 72%,transparent)}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style></head><body>
 <header><div><h1>My Organizer</h1><p id="sub"></p></div><span><button class="ib" data-act="data" aria-label="Data and backup">💾</button><button class="ib" id="bell" data-act="bell" aria-label="Enable notifications">🔔</button></span></header>
 <main id="app"></main>
 <button class="fab" data-act="add" aria-label="Add task">+</button>
-<nav><button data-act="v" data-v="plan"><span>🗓️</span>Planner (tasks)</button><button data-act="v" data-v="rout"><span>🔁</span>Routines</button><button data-act="v" data-v="goals"><span>🎯</span>Goals</button><button data-act="v" data-v="rev"><span>🌙</span>Review</button></nav>
+<nav><button data-act="v" data-v="plan"><span>🗓️</span>Planner (tasks)</button><button data-act="v" data-v="rout"><span>🔁</span>Routines</button><button data-act="v" data-v="goals"><span>🎯</span>Goals</button><button data-act="v" data-v="ideas"><span>💡</span>Ideas</button><button data-act="v" data-v="rev"><span>🌙</span>Review</button></nav>
 <div id="md" class="ov" hidden></div><div id="pops"></div>
 <script>
 const CATS={family:['Family','#e0663f'],health:['Health','#2f9d62'],career:['Career and Purpose','#3d5a9e'],friends:['Friendships','#8e5fc4'],rest:['Rest','#1a95ad']};
@@ -87,14 +91,14 @@ S.routines.push({id:uid(),title:'Morning walk',details:'20 minutes, no phone',ca
 {id:uid(),title:'Plan the day',details:'Top 3 priorities',cat:'career',freq:'workday',time:'08:00',remind:0,start:t},
 {id:uid(),title:'Weekly review',details:'What worked, what next week?',cat:'career',freq:'weekly',dow:0,time:'18:00',remind:15,start:t})}
 let FH=null,wt;
-const fix=d=>{d=Object.assign({tasks:[],routines:[],rdone:{},log:[],fired:{},snz:{},rev:{},goals:[],ctags:[]},d);mig(d);return d};
+const fix=d=>{d=Object.assign({tasks:[],routines:[],rdone:{},log:[],fired:{},snz:{},rev:{},goals:[],ideas:[],ctags:[]},d);mig(d);return d};
 const persist=()=>{try{localStorage.setItem('org1',JSON.stringify(S))}catch(e){}if(FH){clearTimeout(wt);wt=setTimeout(wr,400)}};
-S.rev=S.rev||{};S.goals=S.goals||[];S.ctags=S.ctags||[];const PMAP={work:'career',mind:'health',physical:'health',personal:'friends',professional:'career'},norm=k=>{const l=String(k).toLowerCase();if(PMAP[l])return PMAP[l];const p=Object.entries(CATS).find(([x,[n]])=>x===l||n.toLowerCase()===l);return p?p[0]:k},mig=d=>{[...d.tasks,...d.routines,...d.log].forEach(o=>{o.tags=[...new Set((o.tags||(o.cat?[o.cat]:[])).map(norm))];delete o.cat});d.ctags=[...new Set((d.ctags||[]).map(norm))].filter(k=>!CATS[k])};mig(S);persist();
+S.rev=S.rev||{};S.goals=S.goals||[];S.ideas=S.ideas||[];S.ctags=S.ctags||[];const PMAP={work:'career',mind:'health',physical:'health',personal:'friends',professional:'career'},norm=k=>{const l=String(k).toLowerCase();if(PMAP[l])return PMAP[l];const p=Object.entries(CATS).find(([x,[n]])=>x===l||n.toLowerCase()===l);return p?p[0]:k},mig=d=>{[...d.tasks,...d.routines,...d.log].forEach(o=>{o.tags=[...new Set((o.tags||(o.cat?[o.cat]:[])).map(norm))];delete o.cat});d.ctags=[...new Set((d.ctags||[]).map(norm))].filter(k=>!CATS[k])};mig(S);persist();
 const TG=k=>CATS[k]||[k,'hsl('+([...k].reduce((a,c)=>(a*31+c.charCodeAt(0))%360,7))+',55%,42%)'];
 const tags=o=>o.tags||(o.cat?[o.cat]:[]),col=o=>{const t=tags(o)[0];return t?TG(t)[1]:'#8a94a0'};
 const mday=(ds,n)=>{const d=pd(ds);return d.getDate()===Math.min(n||1,new Date(d.getFullYear(),d.getMonth()+1,0).getDate())};
 function addTag(){const i=$('#f-tag');if(!i||!ed)return;let t=i.value.trim();if(!t)return;const l=t.toLowerCase(),p=Object.entries(CATS).find(([k,[n]])=>k===l||n.toLowerCase()===l);if(p)t=p[0];else{const x=S.ctags.find(c=>c.toLowerCase()===l);if(x)t=x;else S.ctags.push(t)}if(!ed.tags.includes(t))ed.tags.push(t);i.value='';$('#cats').innerHTML=chips(ed.tags);persist()}
-let view='rev',sel=T(),ed=null,delArm=false,lt=[],rd=T(),gl='week',gp=T(),rvm='over',rp=T();
+let view='rev',sel=T(),ed=null,delArm=false,lt=[],rd=T(),gl='week',gp=T(),rvm='over',rp=T(),im='new';
 const LV={week:'Weekly',month:'Monthly',quarter:'Quarterly'},PN={1:'High',2:'Medium',3:'Low'},PD={1:'🔴',2:'🟡',3:'🟢'};
 const pKey=(l,ds)=>{const d=pd(ds);if(l==='week'){d.setDate(d.getDate()-((d.getDay()+6)%7));return ymd(d)}if(l==='month')return ds.slice(0,7);return d.getFullYear()+'-Q'+(Math.floor(d.getMonth()/3)+1)};
 const goalOf=id=>S.goals.find(g=>g.id===id),fmtD=s=>pd(s).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});
@@ -185,6 +189,9 @@ return `<div class="card"><h3 style="margin-top:0">Log progress</h3><input id="l
 
 const BAL=[['B','Blueprint','Did I follow my plan for the day?'],['A','Active','Was I productive and on the move?'],['L','Learning','What did I learn or practise?'],['E','Exercise','Did I train or move my body?'],['R','Relaxing','Did I switch off and recharge?'],['T','Timeout','Did I take real breaks, away from screens?']],FACE=['😞','🙁','😐','🙂','😄'];
 function rev(ds){const R=S.rev[ds]=S.rev[ds]||{ov:0,note:''};BAL.forEach(([k])=>R[k]=R[k]||{r:0,n:''});return R}
+function vIdeas(){
+if(im==='list'){const L=[...S.ideas].sort((a,b)=>b.ts-a.ts);return `<button class='btn' data-act='imv' data-m='new'>+ New idea</button>${L.length?L.map(x=>`<div class='card'><small>${new Date(x.ts).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}</small><div style='white-space:pre-wrap;margin:4px 0 8px;overflow-wrap:anywhere'>${esc(x.text)}${URLS(x.text).map(alink).join('')}</div><div class='row'><button class='btn' data-act='idb' data-id='${x.id}'>Add to backlog</button><button class='btn ghost danger' data-act='di' data-id='${x.id}'>Delete</button></div></div>`).join(''):`<p class='mut'>No ideas yet. Tap New idea to capture one.</p>`}`}
+return `<div style='margin-top:10px'><textarea id='idea' class='idea-box' placeholder='What is the idea?' style='min-height:140px;font-size:16px'></textarea><button class='btn' data-act='ia'>Add idea</button><button class='btn ghost' data-act='imv' data-m='list'>View ideas${S.ideas.length?' ('+S.ideas.length+')':''}</button></div>`}
 function prv(){const k=(rvm==='week'?'w:':'m:')+pKey(rvm,rp);return S.rev[k]=S.rev[k]||{}}
 function vPeriod(m){const k=pKey(m,rp),d=pd(rp);let ds=[];
 if(m==='week'){const s=pd(k);ds=[...Array(7)].map((_,i)=>{const x=new Date(s);x.setDate(s.getDate()+i);return ymd(x)})}else{const y=d.getFullYear(),mo=d.getMonth(),n=new Date(y,mo+1,0).getDate();ds=[...Array(n)].map((_,i)=>ymd(new Date(y,mo,i+1)))}
@@ -197,23 +204,23 @@ function vDay(){const R=rev(rd),st=stat(rd),d=pd(rd),rts=(k,v)=>[1,2,3,4,5].map(
 return `<div class='dh'><button class='ib' data-act='rday' data-n='-1' aria-label='Previous day'>‹</button><h2>${rd===T()?'Today':DN[d.getDay()]+' '+d.getDate()+' '+d.toLocaleDateString(undefined,{month:'short'})}</h2><button class='ib' data-act='rday' data-n='1' aria-label='Next day'>›</button></div><div class='card'><h3 style='margin-top:0'>How did the day go?</h3><small>${st.d} of ${st.t} tasks done. Rate each B-ALERT area from 1 to 5.</small><div class='faces'>${FACE.map((f,i)=>`<button class='${R.ov===i+1?'on':''}' data-act='rate' data-k='ov' data-n='${i+1}' aria-label='Day rating ${i+1}'>${f}</button>`).join('')}</div></div>${BAL.map(([k,n,h])=>`<div class='card bl'><div class='bh'><b class='lt'>${k}</b><div><b>${n}</b><small>${h}</small></div></div><div class='rts'>${rts(k,R[k].r)}</div><textarea data-rk='${k}' placeholder='Notes (optional)'>${esc(R[k].n)}</textarea></div>`).join('')}<div class='card'><label>The day in a sentence<textarea data-rk='note' placeholder='What stood out? What will you change tomorrow?'>${esc(R.note)}</textarea></label></div>`}
 function balCard(){const wk=[...Array(7)].map((_,i)=>{const x=pd(T());x.setDate(x.getDate()-((x.getDay()+6)%7)+i);return ymd(x)}),av=BAL.map(([k,n])=>{const v=wk.map(s=>S.rev[s]&&S.rev[s][k]?S.rev[s][k].r:0).filter(Boolean);return[k,n,v.length?v.reduce((a,b)=>a+b)/v.length:0]}),t=S.rev[T()],dn=t&&(t.ov||BAL.some(([k])=>t[k]&&t[k].r));
 return `<div class='card'><h3 style='margin-top:0'>B-ALERT this week</h3>${av.map(([k,n,a])=>`<div class='cb' style='--c:var(--acc)'><div><span><b>${k}</b> ${n}</span><span>${a?a.toFixed(1):'-'}/5</span></div><div class='tr'><i style='width:${a*20}%'></i></div></div>`).join('')}<button class='btn ${dn?'ghost':''}' data-act='rm' data-m='day'>${dn?'Edit today’s review':'Review today'}</button></div>`}
-function render(){$('#app').innerHTML={dash:vDash,plan:vPlan,rout:vRout,rev:vRev,goals:vGoals,log:vLog}[view]();
+function render(){$('#app').innerHTML={dash:vDash,plan:vPlan,rout:vRout,rev:vRev,goals:vGoals,ideas:vIdeas,log:vLog}[view]();
 document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
-document.body.dataset.v=view;$('h1').textContent={dash:'Dashboard',plan:'Planner (tasks)',rout:'Routines',goals:'Goals',rev:'Review'}[view]||'My Organizer';$('#sub').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
-$('.fab').style.display=view==='log'||view==='rev'?'none':''}
+document.body.dataset.v=view;$('h1').textContent={dash:'Dashboard',plan:'Planner (tasks)',rout:'Routines',goals:'Goals',rev:'Review',ideas:'Ideas'}[view]||'My Organizer';$('#sub').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
+$('.fab').style.display=view==='log'||view==='rev'||view==='ideas'?'none':''}
 
 const chips=(a,act='pc')=>[...Object.keys(CATS),...S.ctags].map(k=>{const[n,c]=TG(k);return `<button type='button' class='cc ${a.includes(k)?'on':''}' style='--c:${c}' data-act='${act}' data-c='${esc(k)}'>${esc(n)}</button>`}).join('');
 const RM=[['','No reminder'],[0,'At the time'],[5,'5 min before'],[10,'10 min before'],[30,'30 min before'],[60,'1 hour before']];
 function notes(){const n=S.log.filter(l=>l.key===ed.key&&l.type==='note');$('#nl').innerHTML=n.map(l=>`<div class="lg"><span>✏️</span><div>${esc(l.text.replace(/^[^:]*: /,''))}<br><small>${new Date(l.ts).toLocaleString([],{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</small></div></div>`).join('')||'<small>No progress notes yet.</small>'}
 function openEd(o){const r=o.id?(o.k==='t'?S.tasks:S.routines).find(x=>x.id===o.id):null,ds=o.nodate?'':r&&o.k==='t'?r.date||'':(o.ds||sel),isT=!r||o.k==='t';
-ed={k:o.k,id:o.id,ds,key:o.id?o.id+'|'+ds:null,tags:r?tags(r).slice():(o.h>=8&&o.h<17?['career']:[]),r};
+ed={k:o.k,id:o.id,ds,key:o.id?o.id+'|'+ds:null,tags:r?tags(r).slice():(o.h>=8&&o.h<17?['career']:[]),idea:o.idea||'',r};
 const rep=r?(o.k==='r'?r.freq:'once'):(o.rep||'once'),tm=r?r.time||'':(o.h!=null?pad(o.h)+':00':'');
 $('#md').innerHTML=`<div class="sh"><div class="hd"><h2>${r?'Edit':'New'} ${o.k==='r'||o.rep?'routine':'task'}</h2><button class="ib" data-act="close" aria-label="Close">✕</button></div>
 <input id="f-title" placeholder="What needs doing?" value="${esc(r?r.title:'')}"><label>Pillars (pick one or more)</label><div class="cats" id="cats">${chips(ed.tags)}</div><div class="tagadd"><input id="f-tag" placeholder="Add an extra tag, e.g. Garden" maxlength="24"><button type="button" class="btn ghost" data-act="ctag">Add tag</button></div>
 <div class="row">${isT?`<label>Date (empty = task list)<input type="date" id="f-date" value="${r&&o.k==='t'?r.date||'':ds}"></label>`:''}<label>Time<input type="time" id="f-time" value="${tm}"></label>
 ${isT&&r?'':`<label>Repeat<select id="f-rep">${[['once','Just once'],['daily','Every day'],['workday','Work days, Mon to Fri'],['weekly','Weekly'],['monthly','Monthly (same date)']].filter(x=>!(r&&x[0]==='once')).map(([v,n])=>`<option value="${v}" ${v===rep?'selected':''}>${n}</option>`).join('')}</select></label>`}
 <label>Reminder<select id="f-rem">${RM.map(([v,n])=>`<option value="${v}" ${(r&&r.remind===v)||(!r&&v===''&&!o.rep)||(!r&&o.rep&&v===0)?'selected':''}>${n}</option>`).join('')}</select></label></div>
-${isT?gfields(r,o):''}<label>Details<textarea id="f-det" placeholder="Notes, links (https://...), steps">${esc(r?r.details:'')}</textarea></label><div id="lks">${lkList(r?r.details:'')}</div>
+${isT?gfields(r,o):''}<label>Details<textarea id="f-det" placeholder="Notes, links (https://...), steps">${esc(r?r.details:(o.det||''))}</textarea></label><div id="lks">${lkList(r?r.details:(o.det||''))}</div>
 ${r?`<h3>Progress log</h3><div id="nl"></div><div class="row" style="grid-template-columns:1fr auto;gap:6px"><input id="f-note" placeholder="Add a progress note"><button class="btn" style="width:auto;margin:4px 0 8px" data-act="note">Add</button></div>`:''}
 ${r&&o.k==='t'?ppBlock(r):''}<button class="btn" data-act="sv">Save</button>${r?'<button class="btn ghost danger" data-act="del">Delete</button>':''}</div>`;
 $('#md').hidden=false;delArm=false;if(r)notes();else setTimeout(()=>$('#f-title').focus(),50)}
@@ -223,7 +230,7 @@ const rm=v('f-rem'),tm=v('f-time')||'',o={title,details:v('f-det')||'',tags:ed.t
 if(r){const old=r.time;Object.assign(r,o);if(ed.k==='t'){r.date=v('f-date')||'';r.goal=v('f-goal')||'';r.prio=+v('f-prio')||2;r.est=+v('f-est')||0;r.due=v('f-due')||''}else{r.freq=v('f-rep');if(r.freq==='weekly'&&r.dow==null)r.dow=new Date().getDay();if(r.freq==='monthly'&&r.dom==null)r.dom=pd(r.start||T()).getDate()}
 Object.keys(S.fired).filter(k=>k.startsWith(r.id+'|')).forEach(k=>delete S.fired[k])}
 else{const fd=v('f-date'),rep=v('f-rep')||'once',date=fd===undefined||(fd===''&&rep!=='once')?sel:fd;
-if(rep==='once')S.tasks.push({id:uid(),date,done:false,created:T(),goal:v('f-goal')||'',prio:+v('f-prio')||2,est:+v('f-est')||0,due:v('f-due')||'',...o});else S.routines.push({id:uid(),freq:rep,dow:pd(date).getDay(),dom:pd(date).getDate(),start:date,...o})}
+if(rep==='once')S.tasks.push({id:uid(),date,done:false,created:T(),goal:v('f-goal')||'',prio:+v('f-prio')||2,est:+v('f-est')||0,due:v('f-due')||'',...o});else S.routines.push({id:uid(),freq:rep,dow:pd(date).getDay(),dom:pd(date).getDate(),start:date,...o});if(ed.idea)S.ideas=S.ideas.filter(x=>x.id!==ed.idea)}
 persist();closeEd();render()}
 
 function popup(it,ds){const el=document.createElement('div');el.className='pop';el.style.setProperty('--c',col(it));
@@ -240,7 +247,7 @@ document.addEventListener('click',e=>{if(e.target.closest('a.lk'))return;if(e.ta
 try{AC=AC||new(window.AudioContext||window.webkitAudioContext)()}catch(x){}
 const b=e.target.closest('[data-act]');if(!b)return;const D=b.dataset;
 switch(D.act){
-case'v':view=D.v;if(view==='rev'){rd=T();rp=T()}render();scrollTo(0,0);break;
+case'v':view=D.v;if(view==='ideas')im='new';if(view==='rev'){rd=T();rp=T()}render();scrollTo(0,0);break;
 case'sel':sel=D.d;render();break;
 case'today':sel=T();render();break;
 case'wk':{const d=pd(sel);d.setDate(d.getDate()+ +D.n);sel=ymd(d);render();break}
@@ -256,6 +263,10 @@ case'rday':{const d=pd(rd);d.setDate(d.getDate()+ +D.n);rd=ymd(d);render();break
 case'gl':gl=D.l;render();break;
 case'gn':{const d=pd(gp),n=+D.n;if(gl==='week')d.setDate(d.getDate()+7*n);else d.setMonth(d.getMonth()+(gl==='month'?n:3*n),1);gp=ymd(d);render();break}
 case'ng':openGoal(null);break;
+case'ia':{const t=$('#idea'),v=t.value.trim();if(!v){t.focus();break}S.ideas.push({id:uid(),ts:Date.now(),text:v});persist();im='list';render();toast('Idea added');break}
+case'imv':im=D.m;render();break;
+case'idb':openEd({k:null,nodate:true,det:(S.ideas.find(x=>x.id===D.id)||{}).text||'',idea:D.id});break;
+case'di':if(b.dataset.arm!=='1'){b.dataset.arm='1';b.textContent='Tap again to delete';break}S.ideas=S.ideas.filter(x=>x.id!==D.id);persist();render();break;
 case'gp':ed.gtags=ed.gtags.includes(D.c)?ed.gtags.filter(x=>x!==D.c):[...ed.gtags,D.c];$('#gcats').innerHTML=chips(ed.gtags,'gp');break;
 case'ps':{try{const d=JSON.parse($('#pst').value.trim());if(!d||!Array.isArray(d.tasks))throw 0;S=fix(d);persist();closeEd();render();toast('Imported: '+cnt())}catch(x){toast('That text could not be read')}break}
 case'cg':openGoal(null,D.id,D.l);break;
