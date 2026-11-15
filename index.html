@@ -84,6 +84,20 @@ body[data-v=insp]{--bg:#fbebf1}
 .dh .rl{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 label[hidden]{display:none}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{flex:none;width:44px;height:44px;padding:0;border-radius:12px;line-height:0;box-shadow:0 1px 4px rgba(20,30,60,.25)}.logo img{display:block;width:100%;height:100%;border-radius:12px}.logo:active{transform:scale(.94)}
+.tlg{position:relative;background-color:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(color-mix(in srgb,var(--line) 40%,transparent) 1px,transparent 1px);background-size:100% var(--hh),100% calc(var(--hh)/2);background-position:0 0,0 calc(var(--hh)/2)}
+.tlg .band{position:absolute;left:0;right:0;background:var(--wk);opacity:.85}
+.tlg .hl2{position:absolute;left:8px;font-size:12.5px;color:var(--mut)}
+.tlg .ad{position:absolute;right:3px;width:30px;height:30px;display:grid;place-items:center}
+.evs{position:absolute;left:52px;right:36px;top:0;bottom:0}
+.ev{position:absolute;display:flex;gap:6px;align-items:flex-start;overflow:hidden;padding:3px 6px;border:1px solid color-mix(in srgb,var(--c) 45%,var(--line));border-left:5px solid var(--c);border-radius:8px;background:color-mix(in srgb,var(--c) 15%,var(--card));box-shadow:0 1px 2px rgba(0,0,0,.08);z-index:2}
+.ev .ck{position:relative;width:20px;height:20px;font-size:12px;margin-top:1px}.ev .ck::after{content:'';position:absolute;inset:-7px}
+.ev .tx{flex:1;min-width:0}.ev .tx b{font-size:14px;line-height:1.2}.ev .tx small{font-size:11.5px;line-height:1.25}
+.ev.sm .tx{display:flex;align-items:center;gap:6px;height:100%}.ev.sm .tx b,.ev.sm .tx small.tm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ev.sm .tx b{display:block;min-width:0}.ev.sm .tx small.tm{flex:none}
+.ev:not(.sm) .tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.nar{padding:3px 4px;gap:4px}.ev.nar .ck{width:16px;height:16px;font-size:10px}.ev.nar .tx b{font-size:12.5px}.ev.nar.sm .tx small.tm{display:none}.ev.nar:not(.sm) .tx b{word-break:break-word}
+.ev.dn .ck{background:var(--c)}.ev.dn .tx b{text-decoration:line-through;color:var(--mut);font-weight:500}
+.ev.old{border-color:#e0a21a;border-left-color:var(--c)}.ev .ib.pp{flex:none}
+.nowl{position:absolute;left:46px;right:0;height:2px;background:var(--acc);z-index:4;pointer-events:none}.nowl::before{content:'';position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--acc)}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style></head><body>
 <header><div class="brand"><button class="logo" data-act="v" data-v="plan" aria-label="Go to Scheduler" title="Scheduler"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%233f6bf5%22/%3E%3Cstop offset=%221%22 stop-color=%22%232347d6%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22512%22 height=%22512%22 rx=%22116%22 fill=%22url%28%23g%29%22/%3E%3Crect x=%2288%22 y=%22136%22 width=%22336%22 height=%22292%22 rx=%2248%22 fill=%22%23fff%22/%3E%3Cpath d=%22M88 184a48 48 0 0 1 48-48h240a48 48 0 0 1 48 48v32H88z%22 fill=%22%23ff7a59%22/%3E%3Crect x=%22140%22 y=%2296%22 width=%2230%22 height=%2276%22 rx=%2215%22 fill=%22%23fff%22 stroke=%22%232347d6%22 stroke-width=%2210%22/%3E%3Crect x=%22226%22 y=%2296%22 width=%2230%22 height=%2276%22 rx=%2215%22 fill=%22%23fff%22 stroke=%22%232347d6%22 stroke-width=%2210%22/%3E%3Cpath d=%22M158 322l64 62 128-132%22 fill=%22none%22 stroke=%22%232fa96b%22 stroke-width=%2246%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cg%3E%3Ccircle cx=%22404%22 cy=%22132%22 r=%2276%22 fill=%22%23ffc93c%22 stroke=%22%232347d6%22 stroke-width=%2214%22/%3E%3Ccircle cx=%22382%22 cy=%22122%22 r=%229%22 fill=%22%237a4a00%22/%3E%3Ccircle cx=%22426%22 cy=%22122%22 r=%229%22 fill=%22%237a4a00%22/%3E%3Cpath d=%22M378 150q26 26 52 0%22 fill=%22none%22 stroke=%22%237a4a00%22 stroke-width=%2210%22 stroke-linecap=%22round%22/%3E%3C/g%3E%3C/svg%3E" alt="" width="44" height="44"></button><div><h1>My Organizer</h1><p id="sub"></p></div></div><span><button class="ib" data-act="data" aria-label="Data and backup">💾</button><button class="ib" id="bell" data-act="bell" aria-label="Enable notifications">🔔</button></span></header>
@@ -178,16 +192,28 @@ persist();render();if(k==='t'&&dn&&it.goal){const g=goalOf(it.goal);if(g){const 
 
 function chip(it,ds){return `<div class="it ${it.done?'dn':''} ${it.k==='t'&&ageT(it)>=14?'old':''}" style="--c:${col(it)}"><button class="ck" data-act="tg" ${A(it,ds)} aria-label="Mark complete">${it.done?'✓':''}</button><div class="tx" data-act="ed" ${A(it,ds)}><b>${it.k==='r'?'🔁 ':''}${esc(it.title)}</b><small>${meta(it).join(', ')}</small>${it.details?`<small>${dsum(it.details)}</small>`:''}</div>${it.k==='t'&&!it.done?`<button class='ib pp' data-act='pp' ${A(it,ds)} aria-label='Postpone task'>⏭️</button>`:''}</div>`}
 
+const HH=72,MINPX=30;
+function dayGrid(L,wd,td){
+const ev=L.map(i=>{const m=+i.time.slice(0,2)*60+ +i.time.slice(3,5),dur=i.k==='t'&&i.est?i.est:30,vm=Math.max(dur,MINPX*60/HH);return{i,s:m,ve:Math.min(1440,m+vm)}});
+let lo=5,hi=22;ev.forEach(x=>{lo=Math.min(lo,Math.floor(x.s/60));hi=Math.max(hi,Math.min(23,Math.ceil(x.ve/60)-1))});
+ev.sort((a,b)=>a.s-b.s||b.ve-a.ve);
+let cur=null;const cls=[];
+ev.forEach(x=>{if(!cur||x.s>=cur.end){cur={end:x.ve,items:[],cols:[]};cls.push(cur)}let c=0;while(cur.cols[c]!==undefined&&cur.cols[c]>x.s)c++;cur.cols[c]=x.ve;x.col=c;cur.items.push(x);cur.end=Math.max(cur.end,x.ve)});
+cls.forEach(cu=>{const n=cu.cols.length;cu.items.forEach(x=>x.n=n)});
+const px=m=>(m-lo*60)*HH/60;
+const evh=x=>{const it=x.i,h=(x.ve-x.s)*HH/60-2,med=h>=48,tall=h>=100;
+return `<div class="ev ${med?'':'sm'} ${x.n>=3?'nar':''} ${it.done?'dn':''} ${it.k==='t'&&ageT(it)>=14?'old':''}" style="top:${px(x.s)+1}px;height:${h}px;left:${x.col/x.n*100}%;width:calc(${100/x.n}% - 3px);--c:${col(it)}"><button class="ck" data-act="tg" ${A(it,sel)} aria-label="Mark complete">${it.done?'✓':''}</button><div class="tx" data-act="ed" ${A(it,sel)}><b>${it.k==='r'?'🔁 ':''}${esc(it.title)}</b>${med?`<small>${meta(it).join(', ')}</small>`:`<small class="tm">${it.time}</small>`}${tall&&it.details?`<small>${dsum(it.details)}</small>`:''}</div>${med&&x.n===1&&it.k==='t'&&!it.done?`<button class="ib pp" data-act="pp" ${A(it,sel)} aria-label="Postpone task">⏭️</button>`:''}</div>`};
+let lines='';for(let h=lo;h<=hi;h++)lines+=`<div class="hl2" style="top:${(h-lo)*HH+3}px">${pad(h)}:00</div><button class="ad" style="top:${(h-lo)*HH+1}px" data-act="add" data-h="${h}" aria-label="Add at ${pad(h)}:00">+</button>`;
+let band='';if(wd){const a=Math.max(8,lo),b=Math.min(17,hi+1);if(b>a)band=`<div class="band" style="top:${(a-lo)*HH}px;height:${(b-a)*HH}px"></div>`}
+let now='';if(sel===td){const n=new Date(),nm=n.getHours()*60+n.getMinutes();if(nm>=lo*60&&nm<(hi+1)*60)now=`<div class="nowl" style="top:${px(nm)-1}px"></div>`}
+return `<div class="tlg" style="height:${(hi-lo+1)*HH}px;--hh:${HH}px">${band}${lines}<div class="evs">${ev.map(evh).join('')}</div>${now}</div>`}
 function vPlan(){const d=pd(sel),mon=new Date(d);mon.setDate(d.getDate()-((d.getDay()+6)%7));const td=T(),nh=new Date().getHours();
 let w='';for(let i=0;i<7;i++){const x=new Date(mon);x.setDate(mon.getDate()+i);const s=ymd(x),st=stat(s);
 w+=`<button class="dy ${s===sel?'on':''} ${s===td?'td':''}" data-act="sel" data-d="${s}"><small>${DS[x.getDay()]}</small><b>${x.getDate()}</b><i>${st.t?st.d+'/'+st.t:'-'}</i></button>`}
-const its=items(sel),wd=d.getDay()>0&&d.getDay()<6,ad=its.filter(isAD),all=its.filter(i=>!i.time&&!isAD(i));let lo=5,hi=22;
-its.forEach(i=>{if(i.time&&!isAD(i)){const h=+i.time.slice(0,2);lo=Math.min(lo,h);hi=Math.max(hi,h);if(i.k==='t'&&i.est)hi=Math.max(hi,Math.min(23,Math.ceil((h*60+ +i.time.slice(3,5)+i.est)/60)-1))}});
-let rows='';for(let h=lo;h<=hi;h++){const c=its.filter(i=>i.time&&!isAD(i)&&+i.time.slice(0,2)===h);
-rows+=`<div class="hr ${wd&&h>=8&&h<17?'wk':''} ${sel===td&&h===nh?'now':''}"><div class="hl">${pad(h)}:00</div><div>${c.map(i=>chip(i,sel)).join('')}${its.filter(i=>cov(i,h)).map(i=>cchip(i,sel)).join('')}</div><button class="ad" data-act="add" data-h="${h}" aria-label="Add at ${pad(h)}:00">+</button></div>`}
+const its=items(sel),wd=d.getDay()>0&&d.getDay()<6,ad=its.filter(isAD),all=its.filter(i=>!i.time&&!isAD(i));const grid=dayGrid(its.filter(i=>i.time&&!isAD(i)),wd,td);
 return `${inspTop()}<div class="dh"><button class="ib" data-act="wk" data-n="-7" aria-label="Previous week">‹</button><h2>${DN[d.getDay()]} ${d.getDate()} ${d.toLocaleDateString(undefined,{month:'short'})}</h2><button class="ib" data-act="wk" data-n="7" aria-label="Next week">›</button></div>
 <div class="wk7">${w}</div><div class="dh"><span class="tag">${wd?'Work day 08:00 to 17:00':'Rest day'}</span><span class="rl">${sel!==td?'<button class="tag" data-act="today">Back to today</button>':''}<button class="tag" data-act="v" data-v="rout">🔁 Routines</button><button class="tag" data-act="v" data-v="goals">🎯 Goals</button></span></div>
-${ad.length?`<h3>All day</h3>${ad.map(i=>chip(i,sel)).join('')}`:''}<h3>Hour by hour</h3><div class="hrs">${rows}</div>${wkgoal()}${overdue()}${all.length?`<h3>Any time</h3>${all.map(i=>chip(i,sel)).join('')}`:''}${backlog()}`}
+${ad.length?`<h3>All day</h3>${ad.map(i=>chip(i,sel)).join('')}`:''}<h3>Hour by hour</h3>${grid}${wkgoal()}${overdue()}${all.length?`<h3>Any time</h3>${all.map(i=>chip(i,sel)).join('')}`:''}${backlog()}`}
 
 function vDash(){const td=T(),t=stat(td),pct=t.t?Math.round(t.d/t.t*100):0,d=pd(td),mon=new Date(d);mon.setDate(d.getDate()-((d.getDay()+6)%7));
 const wk=[...Array(7)].map((_,i)=>{const x=new Date(mon);x.setDate(mon.getDate()+i);return ymd(x)}),ws=wk.map(stat),mx=Math.max(1,...ws.map(s=>s.t));
